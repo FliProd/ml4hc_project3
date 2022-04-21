@@ -5,8 +5,10 @@ To use this template you can generate a Conda environment using `environment.yml
 conda env create -f environment.yml  --name <custom_name>
 ```
 ## Dataset
+This dataset contains a mix of samples from the Kaggle datasets [Brain MRI Images for Brain Tumor Detection](https://www.kaggle.com/datasets/navoneel/brain-mri-images-for-brain-tumor-detection) and [Brain Tumor Classification (MRI)](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri) datasets.
+
 ### Pyradiomics
-To retrieve train and test set for the pyradiomics features we provide the function `get_radiomics_dataset()` in `data.py`. The function returns both datasets as numpy arrays.
+To retrieve train and test set for the [pyradiomics](https://pyradiomics.readthedocs.io/en/latest/) features we provide the function `get_radiomics_dataset()` in `data.py`. The function returns both datasets as numpy arrays.
 ```sh
 from data import get_radiomics_dataset
 train_data, train_labels, test_data, test_labels = get_radiomics_dataset()

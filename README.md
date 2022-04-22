@@ -8,13 +8,13 @@ conda env create -f environment.yml  --name <custom_name>
 This dataset contains a mix of samples from the Kaggle datasets [Brain MRI Images for Brain Tumor Detection](https://www.kaggle.com/datasets/navoneel/brain-mri-images-for-brain-tumor-detection) and [Brain Tumor Classification (MRI)](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri) datasets.
 
 ### Pyradiomics
-To retrieve train and test set for the [pyradiomics](https://pyradiomics.readthedocs.io/en/latest/) features we provide the function `get_radiomics_dataset()` in `data.py`. The function returns both datasets as numpy arrays.
+To retrieve train, validation and test set for the [pyradiomics](https://pyradiomics.readthedocs.io/en/latest/) features we provide the function `get_radiomics_dataset()` in `data.py`. The function returns both datasets as numpy arrays.
 ```sh
 from data import get_radiomics_dataset
-train_data, train_labels, test_data, test_labels = get_radiomics_dataset()
+train_data, train_labels, val_data, val_labels, test_data, test_labels = get_radiomics_dataset()
 ```
 ### Images
-The image train and testsets are provided as pytorch [ImageFolders](https://pytorch.org/vision/main/generated/torchvision.datasets.ImageFolder.html) through `get_img_dataset(transform=None)` in `data.py`. Note that, in order to incorporate data augmentation, you are able to pass a list of [transforms](https://pytorch.org/vision/0.9/transforms.html) to this function.
+The image train, validation and test sets are provided as pytorch [ImageFolders](https://pytorch.org/vision/main/generated/torchvision.datasets.ImageFolder.html) through `get_img_dataset(transform=None)` in `data.py`. Note that, in order to incorporate data augmentation, you are able to pass a list of [transforms](https://pytorch.org/vision/0.9/transforms.html) to this function.
 
 ```sh
 from data import get_img_dataset

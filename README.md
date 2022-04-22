@@ -20,7 +20,7 @@ The image train and testsets are provided as pytorch [ImageFolders](https://pyto
 from data import get_img_dataset
 from torchvision import transforms
 transform = [transforms.RandomRotation(90), transforms.RandomHorizontalFlip()]
-train_dataset, test_dataset = get_img_dataset(transform)
+train_dataset, val_dataset, test_dataset = get_img_dataset(transform)
 ```
 
 ## Baseline

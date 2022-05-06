@@ -37,17 +37,16 @@ def get_img_dataset(transform=None):
     
     # Split dataset into train/test sets and stratify over labels to balance datasets with set seed 
     # DO NOT CHANGE THE SEED
-    generator = torch.Generator().manual_seed(390397)
     train_len = int(0.8*len(train_dataset))
     test_len = int((len(train_dataset)-train_len)/2)
     train_dataset = random_split(
         dataset=train_dataset, 
         lengths=[train_len, test_len, test_len],
-        generator=generator)[0]
+        generator=torch.Generator().manual_seed(390397))[0]
     val_dataset, test_dataset = random_split(
         dataset=test_dataset, 
         lengths=[train_len, test_len, test_len],
-        generator=generator)[1:]
+        generator=torch.Generator().manual_seed(390397))[1:]
     
     return train_dataset, val_dataset, test_dataset
     

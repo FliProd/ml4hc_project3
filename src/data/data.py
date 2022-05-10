@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 from pathlib import Path
 import torch
-from torch.utils.data import Subset, DataLoader
 from torchvision.datasets import ImageFolder
 from torchvision import transforms
 from torch.utils.data import random_split

@@ -1,4 +1,4 @@
-from model import BaselineClf
+from src.models.model import BaselineClf
 model = BaselineClf()
 
 

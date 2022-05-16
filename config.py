@@ -36,3 +36,13 @@ Path to serialized models & figures & stuff
 config['saved_model_path'] = 'models/'
 config['figure_path'] = 'reports/figures/'
 config['report_path'] = 'reports/'
+
+
+"""
+Other
+"""
+config['generate_beta_vae_umap_plot'] = True
+
+# first do a run with pretrain true and finetune false to pretrain, then vice versa to fine tune
+config['pretrain'] = False
+config['finetune'] = False

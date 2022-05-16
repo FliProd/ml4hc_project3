@@ -10,7 +10,7 @@ import os
 
 
 
-def get_img_dataset(transform=None):
+def get_img_dataset(transform=None, pretrain=False):
     # Define data transform
     train_transform = []
     if transform is not None:
@@ -28,7 +28,11 @@ def get_img_dataset(transform=None):
     ])
     
     # Initialize train/test sets
-    data_path = Path("data/images")
+    if pretrain:
+        data_path = Path("data/additional_images")
+    else:
+        data_path = Path("data/images")
+    
     train_dataset = ImageFolder(data_path, transform=train_transform)
     test_dataset = ImageFolder(data_path, transform=test_transform)
     classes = train_dataset.find_classes(data_path)[1]
@@ -48,6 +52,9 @@ def get_img_dataset(transform=None):
         generator=torch.Generator().manual_seed(390397))[1:]
     
     return train_dataset, val_dataset, test_dataset
+
+
+
     
     
     

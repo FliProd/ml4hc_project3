@@ -19,7 +19,7 @@ def main():
     # load and split data into sentences with labels
     print('loading data')
     if model_name in options['image_models']:
-        (train_dataset, val_dataset, test_dataset) = get_img_dataset(transform=options['transforms'])
+        (train_dataset, val_dataset, test_dataset) = get_img_dataset(transform=options['transforms'], pretrain=options['pretrain'])
     elif model_name in options['radiomics_models']:
         (train_data, train_labels, val_data, val_labels, test_data, test_labels) = get_radiomics_dataset()
         train_dataset = (train_data, train_labels)
@@ -51,6 +51,8 @@ def evaluate(model, test_dataset, model_identifier):
     for i, (imgs, labels) in enumerate(test_dataloader):
         y_pred = model.predict(imgs)
         y_true = labels
+        print(y_true)
+        print(y_pred)
 
     acc = accuracy_score(y_true, y_pred)
     print('Accuracy:', acc)

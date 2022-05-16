@@ -5,6 +5,11 @@ import torch.nn.init as init
 from torch.autograd import Variable
 
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+
+import umap
+import umap.plot
 
 
 def reparametrize(mu, logvar):
@@ -67,6 +72,10 @@ class BetaVAE_CLF(nn.Module):
         # initialize classifier which will predict on latent space
         if classifier == 'SVM':
             self.classifier = SVC(**classifier_options)
+        elif classifier == 'RFS':
+            self.classifier = RandomForestClassifier(**classifier_options)
+        elif classifier == 'KNN':
+            self.classifier = KNeighborsClassifier(**classifier_options)
 
     def weight_init(self):
         for block in self._modules:
@@ -88,6 +97,13 @@ class BetaVAE_CLF(nn.Module):
     def _decode(self, z):
         return self.decoder(z)
 
+    def plot_latent_space(self, Z, y):
+        reducer = umap.UMAP()
+        reducer.fit(Z)
+        umap.plot.points(reducer, labels=y)
+        umap.plot.plt.savefig('reports/figures/latent_space_umap.png')
+
+
     def fit_classifier(self, Z, y):
         self.classifier.fit(Z, y)
 
@@ -97,6 +113,7 @@ class BetaVAE_CLF(nn.Module):
         X = X.to(device)
         Z = self._encode(X)[:,:self.z_dim].detach().numpy()
         return self.classifier.predict(Z)
+
 
 
 def kaiming_init(m):

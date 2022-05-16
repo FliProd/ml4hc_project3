@@ -40,7 +40,7 @@ def kl_divergence(mu, logvar):
 
 
 def train_beta_vae(train_dataset, options):
-    epochs = 1
+    epochs = 10
     interval = 100
     batch_size = options['batch_size']
     reduction = options['loss_reduction']
@@ -59,7 +59,7 @@ def train_beta_vae(train_dataset, options):
 
 
     (loaded, Z, y) = load_model(options['model_identifier'], options['saved_model_path'], model, optimizer)
-    if not loaded:
+    if not loaded or options['finetune']:
 
         train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True,  num_workers=4)
 
@@ -87,6 +87,7 @@ def train_beta_vae(train_dataset, options):
                     Z[chunkstart:chunkstart + chunksize] = mu.detach().numpy()
                     y[chunkstart:chunkstart + chunksize] = labels
 
+
                 if i % interval == 0:
                     loss = loss/len(imgs) if reduction=='mean' else loss
                     print(f'epoch {e}/{epochs} [{i*len(imgs)}/{len(train_dataloader.dataset)} ({100.*i/len(train_dataloader):.2f}%)]'
@@ -102,6 +103,9 @@ def train_beta_vae(train_dataset, options):
 
     print('training Classifier')
     model.fit_classifier(Z, y)
+
+    if config['generate_beta_vae_umap_plot']:
+        model.plot_latent_space(Z, y)
     
     return model
 

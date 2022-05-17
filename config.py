@@ -20,14 +20,14 @@ config['batch_size'] = 32
 
 """
 Model related settings 
-Available models: BetaVAE
+Available models: BetaVAE, RandomForest, SVM
 """
-config['model'] = 'BetaVAE'
+config['model'] = 'RandomForest'
 
 config['pytorch_models'] = ['BetaVAE']
 
 config['image_models'] = ['BetaVAE']
-config['radiomics_models'] = []
+config['radiomics_models'] = ['RandomForest','SVM']
 
 
 """

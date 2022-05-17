@@ -6,6 +6,7 @@ from src.models.hyperparameters import params
 from config import config
 from util import get_training_function, createIdentifier
 from src.data.data import get_img_dataset, get_radiomics_dataset
+from scr.train.train_rf import train_rf
 
 
 
@@ -14,30 +15,36 @@ def main():
     options = {**config, **params[model_name]}
     model_identifier = createIdentifier(model_name, params)
     options['model_identifier'] = model_identifier
-    
+    radiomics = False
 
     # load and split data into sentences with labels
     print('loading data')
     if model_name in options['image_models']:
         (train_dataset, val_dataset, test_dataset) = get_img_dataset(transform=options['transforms'], pretrain=options['pretrain'])
     elif model_name in options['radiomics_models']:
-        (train_data, train_labels, val_data, val_labels, test_data, test_labels) = get_radiomics_dataset()
+        train_data, train_labels, val_data, val_labels, test_data, test_labels = get_radiomics_dataset()
         train_dataset = (train_data, train_labels)
         val_dataset = (val_data, val_labels)
         test_dataset = (test_data, test_labels)
+        radiomics = True
+
     print('loaded', len(train_dataset), 'training images')
     print('loaded', len(test_dataset), 'test images')
 
     
-
-    # call training function for model specified in config/config.py
-    # pass hyperparameters as named parameters
-    print('training model')
-    model = get_training_function(model_name)(train_dataset=train_dataset, options=options)
+    if radiomics :
+        acc = get_training_function(model_name)(train_data, train_labels, val_data, val_labels, test_data, test_labels)
+        print ("Accuracy", acc)
     
-    
-    # uncomment to evaluate
-    evaluate(model=model, test_dataset=test_dataset, model_identifier=model_identifier)
+    else:
+        # call training function for model specified in config/config.py
+        # pass hyperparameters as named parameters
+        print('training model')
+        model = get_training_function(model_name)(train_dataset=train_dataset, options=options)
+        
+        
+        # uncomment to evaluate
+        evaluate(model=model, test_dataset=test_dataset, model_identifier=model_identifier)
     
 
 # tests the model on the test dataset

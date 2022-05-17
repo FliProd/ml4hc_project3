@@ -22,7 +22,7 @@ config['batch_size'] = 32
 Model related settings 
 Available models: BetaVAE, RandomForest, SVM, cnn
 """
-config['model'] = 'cnn'
+config['model'] = 'RandomForest'
 
 config['pytorch_models'] = ['BetaVAE', 'cnn']
 

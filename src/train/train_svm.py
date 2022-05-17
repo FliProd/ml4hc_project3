@@ -84,8 +84,7 @@ def train_svm(train_data, train_labels, val_data, val_labels, test_data, test_la
 
     #calculate accuracy
     acc = accuracy_score(test_labels, pred_labels)
-    print("predict", pred_labels)
-    print(acc)
+    print("Accuracy:", acc)
 
     #Plot permutation importance of the features
     perm_importance = permutation_importance(clf, test_data_uncorr, test_labels, n_repeats=30)
@@ -96,4 +95,3 @@ def train_svm(train_data, train_labels, val_data, val_labels, test_data, test_la
     plt.xlabel("Permutation Importance")
     plt.show()
     
-    return acc

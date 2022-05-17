@@ -136,11 +136,11 @@ def train_rf(train_data, train_labels, val_data, val_labels, test_data, test_lab
     x_val = [x[0] for x in feature_importances]
     y_val = [x[1] for x in feature_importances]
 
+    print("Accuracy:", acc)
+
     #plot feature names and importance values 
     plt.title('Feature Importances')
     plt.barh(range(len(y_val)), y_val, color='#8f63f4', align='center')
     plt.yticks(range(len(x_val)), x_val, size= 3.5, stretch= 'extra-condensed')
     plt.xlabel('Relative Importance')
     plt.show()
-
-    return acc

@@ -32,8 +32,8 @@ def main():
 
     
     if radiomics :
-        acc = get_training_function(model_name)(train_data, train_labels, val_data, val_labels, test_data, test_labels)
-        print ("Accuracy:", acc)
+        get_training_function(model_name)(train_data, train_labels, val_data, val_labels, test_data, test_labels)
+        
     
     else:
         # call training function for model specified in config/config.py

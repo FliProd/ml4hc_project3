@@ -1,6 +1,6 @@
 from src.train.train_beta_vae import train_beta_vae
-from scr.train.train_rf import train_rf
-from scr.train.train_svm import train_svm
+from src.train.train_rf import train_rf
+from src.train.train_svm import train_svm
 
 def get_training_function(model_name):
     if model_name == 'BetaVAE':

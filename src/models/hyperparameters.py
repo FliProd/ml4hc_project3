@@ -12,5 +12,8 @@ params = {
             #'RFS': {'n_estimators': 50},
             #'KNN': {'n_neighbors': 2, 'weights': 'distance'}
         }
-    }
+    },
+    'RandomForest': {},
+    
+    'SVM': {}
 }

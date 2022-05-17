@@ -6,7 +6,6 @@ from src.models.hyperparameters import params
 from config import config
 from util import get_training_function, createIdentifier
 from src.data.data import get_img_dataset, get_radiomics_dataset
-from scr.train.train_rf import train_rf
 
 
 
@@ -34,7 +33,7 @@ def main():
     
     if radiomics :
         acc = get_training_function(model_name)(train_data, train_labels, val_data, val_labels, test_data, test_labels)
-        print ("Accuracy", acc)
+        print ("Accuracy:", acc)
     
     else:
         # call training function for model specified in config/config.py

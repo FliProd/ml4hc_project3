@@ -6,7 +6,6 @@ import pandas as pd
 
 from pprint import pprint
 import matplotlib.pyplot as plt
-import seaborn as sn
 
 #inspired by https://github.com/pwesp/random-forest-polyp-classification, 
 #https://towardsdatascience.com/hyperparameter-tuning-the-random-forest-in-python-using-scikit-learn-28d2aa77dd74

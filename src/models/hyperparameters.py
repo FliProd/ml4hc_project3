@@ -15,5 +15,7 @@ params = {
     },
     'RandomForest': {},
     
-    'SVM': {}
+    'SVM': {},
+
+    'cnn': {}
 }

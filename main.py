@@ -1,6 +1,8 @@
 import numpy as np
 from sklearn.metrics import accuracy_score
 from torch.utils.data import DataLoader
+import torch
+import shap
 
 from src.models.hyperparameters import params
 from config import config
@@ -44,6 +46,9 @@ def main():
         
         # uncomment to evaluate
         evaluate(model=model, test_dataset=test_dataset, model_identifier=model_identifier)
+
+        #uncomment for shap values
+        shap_explainer(train_dataset, test_dataset, model)
     
 
 # tests the model on the test dataset
@@ -55,13 +60,36 @@ def evaluate(model, test_dataset, model_identifier):
     test_dataloader = DataLoader(test_dataset, batch_size=config['batch_size'], shuffle=True,  num_workers=4)
 
     for i, (imgs, labels) in enumerate(test_dataloader):
-        y_pred = model.predict(imgs)
+        if config['model'] == 'cnn':
+            preds = model(imgs)
+            x, y_pred = torch.max(preds, dim=1)
+        else:
+            y_pred = model.predict(imgs)
         y_true = labels
         print(y_true)
         print(y_pred)
 
     acc = accuracy_score(y_true, y_pred)
     print('Accuracy:', acc)
+
+def shap_explainer(train_dataset, test_dataset, model):
+    bg = []
+    for i,j in train_dataset:
+        bg.append(i)
+    bg = torch.stack(bg)
+    e = shap.DeepExplainer(model, bg)
+
+    for i, (image,target) in enumerate(test_dataset):
+        image = image.reshape((1,3,128,128))
+
+        preds = model(image)
+        pred, out = torch.max(preds, dim=1)
+        
+        #https://github.com/slundberg/shap/issues/1243
+        shap_values = e.shap_values(image)
+        shap_numpy = [np.swapaxes(np.swapaxes(s, 1, -1), 1, 2) for s in shap_values]
+        test_numpy = np.swapaxes(np.swapaxes(image.cpu().numpy(), 1, -1), 1, 2)
+        shap.image_plot(shap_numpy, test_numpy, labels = ["SHAP for class No","SHAP for class Yes"])
 
 
 
